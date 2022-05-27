@@ -60,6 +60,8 @@ public class Employee {
     public void setSalary(double salary){
         this.salary = salary;
     }
+    // consider the possibility of edge cases or the wrong stuff getting entered here
+    // could protect against that with an if statement maybe
 
     public void setDepartment(Department department){
         this.department = department;
