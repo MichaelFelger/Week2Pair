@@ -6,6 +6,7 @@ import java.util.List;
 public class Application {
 
     List<Department> departments = new ArrayList<>();
+    List<Employee> employees = new ArrayList<>();
     /**
      * The main entry point in the application
      * @param args
@@ -19,12 +20,12 @@ public class Application {
 
         // create some departments
         createDepartments();
-        Department department1 = new Department(1, "Marketing");
-        departments.add(department1);
-        Department department2 = new Department(2, "Sales");
-        departments.add(department2);
-        Department department3 = new Department(3, "Engineering");
-        departments.add(department3);
+        Department marketingDept = new Department(1, "Marketing");
+        departments.add(marketingDept);
+        Department salesDept = new Department(2, "Sales");
+        departments.add(salesDept);
+        Department engiDept = new Department(3, "Engineering");
+        departments.add(engiDept);
         // print each department by name
         printDepartments();
         for(Department departmentId : departments){
@@ -32,12 +33,19 @@ public class Application {
         }
         // create employees
         createEmployees();
+        Employee employeeDean = new Employee(1,"Dean", "Johnson", "djohnson@teams.com", engiDept, "08/21/2020");
+        Employee employeeAngie = new Employee(2,"Angie", "Smith", "asmith@teams.com", engiDept, "08/21/2020");
+        Employee employeeMargaret = new Employee(3,"Margaret", "Thompson", "mthompson@teams.com", marketingDept, "08/21/2020");
+        employees.add(employeeDean);
+        employees.add(employeeAngie);
+        employees.add(employeeMargaret);
 
         // give Angie a 10% raise, she is doing a great job!
-
+        employeeAngie.raiseSalary(10);
         // print all employees
         printEmployees();
-
+        for (Employee allEmployees : employees)
+            System.out.println(allEmployees.getLastName() + ", " + allEmployees.getFirstName() + " (" + allEmployees.getSalary() + ") " + allEmployees.getDepartment().getName());
         // create the TEams project
         createTeamsProject();
         // create the Marketing Landing Page Project
