@@ -1,14 +1,20 @@
 package com.techelevator;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Application {
 
     List<Department> departments = new ArrayList<>();
     List<Employee> employees = new ArrayList<>();
+    Map<String, Project> projects = new HashMap<>();
+
     /**
      * The main entry point in the application
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -28,14 +34,14 @@ public class Application {
         departments.add(engiDept);
         // print each department by name
         printDepartments();
-        for(Department departmentId : departments){
+        for (Department departmentId : departments) {
             System.out.println(departmentId.getName());
         }
         // create employees
         createEmployees();
-        Employee employeeDean = new Employee(1,"Dean", "Johnson", "djohnson@teams.com", engiDept, "08/21/2020");
-        Employee employeeAngie = new Employee(2,"Angie", "Smith", "asmith@teams.com", engiDept, "08/21/2020");
-        Employee employeeMargaret = new Employee(3,"Margaret", "Thompson", "mthompson@teams.com", marketingDept, "08/21/2020");
+        Employee employeeDean = new Employee(1, "Dean", "Johnson", "djohnson@teams.com", engiDept, "08/21/2020");
+        Employee employeeAngie = new Employee(2, "Angie", "Smith", "asmith@teams.com", engiDept, "08/21/2020");
+        Employee employeeMargaret = new Employee(3, "Margaret", "Thompson", "mthompson@teams.com", marketingDept, "08/21/2020");
         employees.add(employeeDean);
         employees.add(employeeAngie);
         employees.add(employeeMargaret);
@@ -45,14 +51,41 @@ public class Application {
         // print all employees
         printEmployees();
         for (Employee allEmployees : employees)
-            System.out.println(allEmployees.getLastName() + ", " + allEmployees.getFirstName() + " (" + allEmployees.getSalary() + ") " + allEmployees.getDepartment().getName());
+            System.out.println(allEmployees.getFullName() + " (" + allEmployees.getSalary() + ") " + allEmployees.getDepartment().getName());
         // create the TEams project
         createTeamsProject();
+        Project teamsProject = new Project("TEams", "Project Management Software", "10/10/2020", "11/10/2020");
+        List<Employee> engiEmployees = new ArrayList<>();
+        for (Employee engineers : employees) {
+            if (engineers.getDepartment() == engiDept) {
+                engiEmployees.add(engineers);
+            }
+        }
+        teamsProject.setTeamMembers(engiEmployees);
+
+
+        projects.put("TEams", teamsProject);
         // create the Marketing Landing Page Project
         createLandingPageProject();
-
+        Project marketingLandingPageProject = new Project("Marketing Landing Page", "Lead Capture Landing Page for Marketing", "10/10/2020", "10/17/2020");
+        List<Employee> marketingEmployees = new ArrayList<>();
+        for (Employee marketers : employees) {
+            if (marketers.getDepartment() == marketingDept) {
+                marketingEmployees.add((marketers));
+            }
+        }
+        for (Employee allEmployees : employees) {
+            if (allEmployees.getDepartment() == marketingDept) {
+                marketingLandingPageProject.setTeamMembers(employees);
+            }
+        }
+        marketingLandingPageProject.setTeamMembers(marketingEmployees);
+        projects.put("Marketing Landing Page Project", marketingLandingPageProject);
         // print each project name and the total number of employees on the project
         printProjectsReport();
+        for (Map.Entry<String, Project> projectStatus : projects.entrySet()) {
+            System.out.println(projectStatus.getKey() + ": " + projectStatus.getValue().getTeamMembers().size());
+        }
     }
 
     /**
